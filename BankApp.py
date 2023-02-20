@@ -1,5 +1,6 @@
 import BankAppClass as ba
 bank = ba.Bank()
+customer = ba.Customer("", "")
 from os import system, name
 
 def clear():
@@ -15,7 +16,6 @@ def MainMenu():
         userChoice = int(input("Choose your option: "))
         if userChoice == 1:
             LoggedIn()
-            LoggedInMenu()
         elif userChoice == 2:
             CreateCustomer()
         elif userChoice == 3:
@@ -25,15 +25,25 @@ def MainMenu():
 
 def CreateCustomer():
     clear()
-    name = input("What do you want your username to be: ")
+    username = input("What do you want your username to be: ")
     password = input("What do you want your password to be: ")
-    bank.add_customer(ba.Customer(name, password))
+    bank.add_customer(ba.Customer(username, password))
 
 def LoggedIn():
-    clear()
-    name = input("Username: ")
-    password = input("Password: ")
-    bank.login(name, password)
+    x = True
+    while(x == True):
+        clear()
+        username = input("Username: ")
+        password = input("Password: ")
+        for customers in bank.customers:
+            if username == customers.name and password == customers.password:
+                bank.login(username, password)
+                LoggedInMenu()
+                x = False
+            else:
+                print("Wrong Username Or Password")
+                input("Press Enter To Return:")
+            
 
 def LoggedInMenu():
     while(True):
@@ -80,12 +90,10 @@ def ChoosenAccount(number):
             clear()
             depositMoney = int(input("How much money do you want to deposit: "))
             bank.deposit(number, depositMoney)
-            break
         elif userChoice == 2:
             clear()
             withdrawMoney = int(input("How much money do you want to withdraw: "))
             bank.withdraw(number, withdrawMoney)
-            break
         elif userChoice == 3:
             bank.remove_account(number)
             break
