@@ -30,20 +30,18 @@ def CreateCustomer():
     bank.add_customer(ba.Customer(username, password))
 
 def LoggedIn():
-    x = True
-    while(x == True):
-        clear()
-        username = input("Username: ")
-        password = input("Password: ")
-        for customers in bank.customers:
-            if username == customers.name and password == customers.password:
-                bank.login(username, password)
-                LoggedInMenu()
-                x = False
-            else:
-                print("Wrong Username Or Password")
-                input("Press Enter To Return:")
-            
+    clear()
+    global loginUsername
+    loginUsername = input("Username: ")
+    password = input("Password: ")
+    for customers in bank.customers:
+        if loginUsername == customers.name and password == customers.password:
+            bank.login(loginUsername, password)
+            LoggedInMenu()
+        else:
+            print("Wrong Username Or Password")
+            input("Press Enter To Return:")
+        
 
 def LoggedInMenu():
     while(True):
@@ -70,7 +68,7 @@ def LoggedInMenu():
         elif userChoice == 4:
             clear()
             passwordChoice = input("Choose your new password: ")
-            bank.change_customer_password(passwordChoice)
+            bank.change_customer_password(loginUsername ,passwordChoice)
         elif userChoice == 5:
             bank.logout()
             break
