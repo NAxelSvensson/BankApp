@@ -3,20 +3,20 @@ class Account:
         self.number = number
         self.money = money
     
-    #Funktion för att hämta kontonummer
+    #Function to get account numbers
     def get_numbers(self):
         return self.number
     
-    #Funktion för att hämta pengar
+    #Function to get account money
     def get_money(self):
         return self.money
     
-    #Funktion för att lägga till pengar till kontot
+    #Function for depositing money to account
     def deposit(self, money):
         self.money += money
         return self.money
     
-    #Funktion för att hämta ut pengar från kontot
+    #Function for withdrawing money from account
     def withdraw(self, money):
         self.money -= money
         return self.money
@@ -27,11 +27,11 @@ class Customer:
         self.password = password
         self.accounts = []
     
-    #Funktion för att hämta alla konto
+    #Function to get all accounts
     def get_accounts(self):
         return self.accounts
     
-    #Funktion för att lägga till ett konto
+    #Function to add an account
     def add_account(self, number):
         self.accounts.append(Account(number))
 
@@ -40,11 +40,11 @@ class Bank:
         self.customers = []
         self.current_customer = None
     
-    #Funktion för att lägga till kund
+    #Function to add a customer
     def add_customer(self, customer):
         self.customers.append(customer)
     
-    #Funktion för att ändra en kunds lösenord
+    #Function to change a customers password
     def change_customer_password(self, name, new_password):
         for customer in self.customers:
             if customer.name == name:
@@ -52,7 +52,7 @@ class Bank:
                 return True
         return False
     
-    #Funktion för att logga in
+    #Function for logging in
     def login(self, username, password):
         for customer in self.customers:
             if customer.name == username and customer.password == password:
@@ -60,23 +60,23 @@ class Bank:
                 return True
         return False
     
-    #Funktion för att logga ut
+    #Function for logging out
     def logout(self):
         self.current_customer = None
     
-    #Funktion för att hämta alla kontona för den inloggade kunden
+    #Function to get all accounts from the logged in customer
     def get_accounts(self):
         if self.current_customer:
             for account in self.current_customer.get_accounts():
                 print(f"Kontonummer: {account.get_numbers()}, Pengar: {account.get_money()}" )
             return self.current_customer.get_accounts()
     
-    #Funktion för att lägga till konto för den inloggade kunden
+    #Function to add an account to the logged in customer
     def add_account(self, number):
         if self.current_customer:
             self.current_customer.add_account(number)
     
-    #Funktion för att ta bort ett konto för den inloggade kunden
+    #Function to remove an account from the logged in customer
     def remove_account(self, number):
         for account in self.current_customer.get_accounts():
             if account.get_numbers() == number:
@@ -84,7 +84,7 @@ class Bank:
                 return True
         return False
     
-    #Funktion för att få ett specifikt konto från den inloggade kunden
+    #Function to get a specific account from the logged in customer
     def get_account(self, number):
         if self.current_customer:
             for account in self.current_customer.get_accounts():
@@ -94,7 +94,7 @@ class Bank:
                     return account
             return None
     
-    #Funktion för att lägga till pengar till ett specifikt konto från den inloggade kunden
+    #Function for depositing money to an account from the logged in customer
     def deposit(self, number, money):
         if self.current_customer:
             for account in self.current_customer.get_accounts():
@@ -103,7 +103,7 @@ class Bank:
                     return True
             return False
     
-    #Funktion för att lägga ta ut pengar från ett specifikt konto om man har pengarna från den inloggade kunden
+    #Function for withdrawing money from an account from the logged in customer
     def withdraw(self, number, money):
         if self.current_customer:
             for account in self.current_customer.get_accounts():
